@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 class Car {
   int id;
   int timestampCadastro;
@@ -24,19 +22,17 @@ class Car {
 
   factory Car.fromMap(Map<String, dynamic> map) {
     return Car(
-      id: map['id']?.toInt() ?? 0,
-      timestampCadastro: map['timestamp_cadastro']?.toInt() ?? 0,
-      modeloId: map['modelo_id']?.toInt() ?? 0,
-      ano: map['ano']?.toInt() ?? 0,
+      id: map['id'] ?? 0,
+      timestampCadastro: map['timestamp_cadastro'] ?? 0,
+      modeloId: map['modelo_id'] ?? 0,
+      ano: map['ano'] ?? 0,
       combustivel: map['combustivel'] ?? '',
-      numPortas: map['num_portas']?.toInt() ?? 0,
+      numPortas: map['num_portas'] ?? 0,
       cor: map['cor'] ?? '',
       nomeModelo: map['nome_modelo'] ?? '',
-      valor: map['valor']?.toInt() ?? 0,
+      valor: map['valor'].toInt() ?? 0,
     );
   }
-
-  factory Car.fromJson(String source) => Car.fromMap(json.decode(source));
 
   @override
   String toString() {
