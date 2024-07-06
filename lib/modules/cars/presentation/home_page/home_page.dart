@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../data/cars_repository.dart';
 import '../widgets/brand_list.dart';
 import '../widgets/cars_item.dart';
 
@@ -17,14 +16,6 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  final carsRepository = CarsRepository();
-
-  getCars() async {
-    final cars = await carsRepository.getAllCars();
-
-    print(cars);
-  }
-
   int _selectedPageIndex = 0;
 
   void setSelectedIndex(int index) {
