@@ -21,22 +21,12 @@ class CarDetailPageState extends State<CarDetailPage> {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.arrow_back,
               color: Colors.white60,
               size: 30,
             ),
           ),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.more_horiz,
-                color: Colors.white60,
-                size: 30,
-              ),
-            )
-          ],
         ),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,106 +125,48 @@ class CarDetailPageState extends State<CarDetailPage> {
                 ),
               ),
             ),
-            Container(
-              margin: EdgeInsets.fromLTRB(20, 15, 20, 10),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Location",
-                      ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.directions_walk,
-                            size: 24,
-                            color: Colors.black54,
-                          ),
-                          Text(
-                            "344m",
-                            style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black54),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.location_pin,
-                        color: Colors.blue,
-                      ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text(
-                        "Mansfield Avenu, Los Angeles, CA",
-                        style: GoogleFonts.montserrat(fontSize: 16, fontWeight: FontWeight.w400, color: Colors.black87),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
           ],
         ),
-        bottomSheet: PriceAndBookNow(),
-      ),
-    );
-  }
-}
-
-class PriceAndBookNow extends StatelessWidget {
-  const PriceAndBookNow({
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Container(
-            margin: EdgeInsets.only(left: 30),
-            child: RichText(
-              text: TextSpan(
-                style: GoogleFonts.montserrat(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.w500),
-                children: const <TextSpan>[
-                  TextSpan(text: '\$180'),
-                  TextSpan(text: '/day', style: TextStyle(color: Colors.black38)),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            width: 170,
-            height: 60,
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context) => CarDetailPage()));
-              },
-              child: Text(
-                "Book now",
-                style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, fontSize: 18),
-              ),
-              style: ElevatedButton.styleFrom(
-                elevation: 0,
-                shape: new RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(20),
+        bottomSheet: Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                margin: EdgeInsets.only(left: 30),
+                child: RichText(
+                  text: TextSpan(
+                    style: GoogleFonts.montserrat(fontSize: 20, color: Colors.black87, fontWeight: FontWeight.w500),
+                    children: const <TextSpan>[
+                      TextSpan(text: '\$180'),
+                      TextSpan(text: '/day', style: TextStyle(color: Colors.black38)),
+                    ],
                   ),
                 ),
               ),
-            ),
-          )
-        ],
+              Container(
+                width: 170,
+                height: 60,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => CarDetailPage()));
+                  },
+                  child: Text(
+                    "EU QUERO",
+                    style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, fontSize: 18),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                      ),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -290,7 +222,7 @@ class TopMenuAndShowcase extends StatelessWidget {
                           boxShadow: [BoxShadow(color: Colors.black12, blurRadius: 7, spreadRadius: 0.5)],
                         ),
                         child: Image.asset(
-                          "assets/logos/ic_tesla_black.png",
+                          "assets/icons/toyota_icon.png",
                           width: 25,
                           height: 25,
                         ),
@@ -309,22 +241,6 @@ class TopMenuAndShowcase extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.star,
-                            color: Colors.orange,
-                          ),
-                          Text(
-                            "4.8",
-                            style: GoogleFonts.montserrat(
-                              fontSize: 20,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      )
                     ],
                   ),
                 ),

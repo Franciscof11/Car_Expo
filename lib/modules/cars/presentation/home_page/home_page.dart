@@ -95,7 +95,7 @@ class HomePageState extends State<HomePage> {
             const BrandList(),
             Expanded(
               child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 0, horizontal: 23),
+                margin: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
