@@ -1,7 +1,9 @@
 import 'package:car_expo/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 
+import '../home_page/home_page.dart';
 import '../widgets/custom_text_form_field.dart';
 
 class AuthPage extends StatefulWidget {
@@ -124,9 +126,15 @@ class _AuthPageState extends State<AuthPage> {
                       onPressed: () {
                         final validForm = formKey.currentState?.validate() ?? false;
 
-                        print(nameTextController.text);
-                        print(emailTextController.text);
-                        print(validForm);
+                        if (validForm) {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: const HomePage(),
+                            ),
+                          );
+                        }
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
