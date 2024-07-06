@@ -14,6 +14,17 @@ class AuthPage extends StatefulWidget {
 class _AuthPageState extends State<AuthPage> {
   final formKey = GlobalKey<FormState>();
 
+  final nameTextController = TextEditingController();
+
+  final emailTextController = TextEditingController();
+
+  @override
+  void dispose() {
+    nameTextController.dispose();
+    emailTextController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,6 +93,7 @@ class _AuthPageState extends State<AuthPage> {
                 const SizedBox(height: 25),
                 CustomTextFormField(
                   label: 'Nome',
+                  controller: nameTextController,
                   sufixIcon: Icon(
                     Icons.person_rounded,
                     color: Colors.grey[700],
@@ -90,6 +102,7 @@ class _AuthPageState extends State<AuthPage> {
                 const SizedBox(height: 30),
                 CustomTextFormField(
                   label: 'Email',
+                  controller: emailTextController,
                   sufixIcon: Icon(
                     Icons.email,
                     color: Colors.grey[700],
@@ -108,7 +121,13 @@ class _AuthPageState extends State<AuthPage> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        final validForm = formKey.currentState?.validate() ?? false;
+
+                        print(nameTextController.text);
+                        print(emailTextController.text);
+                        print(validForm);
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
