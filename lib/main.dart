@@ -1,4 +1,4 @@
-import 'package:car_expo/modules/cars/data/cars_repository.dart';
+import 'package:car_expo/modules/cars/presentation/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,23 +10,9 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final carsRepository = CarsRepository();
-
-    getCars() async {
-      final cars = await carsRepository.getAllCars();
-
-      print(cars);
-    }
-
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: GestureDetector(
-            onTap: () => getCars(),
-            child: const Text('KATIAU'),
-          ),
-        ),
-      ),
+    return const MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: SplashScreen(),
     );
   }
 }
