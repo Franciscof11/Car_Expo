@@ -1,12 +1,17 @@
 import 'dart:io';
 
+import 'package:car_expo/modules/cars/data/cars_repository.dart';
 import 'package:car_expo/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../domain/car.dart';
 import '../widgets/brand_list.dart';
 import '../widgets/cars_item.dart';
+import '../widgets/loader.dart';
+import 'cubit/cars_list_cubit.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -102,20 +107,43 @@ class HomePageState extends State<HomePage> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () async {},
                           icon: const Icon(Icons.sort),
                         )
                       ],
                     ),
-                    Expanded(
-                      child: ListView.builder(
-                        controller: _scrollController,
-                        itemCount: 3,
-                        itemBuilder: (context, index) {
-                          return const CarItem();
-                        },
+                    Center(
+                      child: Loader<CarsListCubit, CarsListState>(
+                        selector: (state) => state.maybeWhen(
+                          orElse: () => false,
+                          loading: () => true,
+                        ),
                       ),
-                    )
+                    ),
+                    BlocSelector<CarsListCubit, CarsListState, List<Car>>(
+                      selector: (state) => state.maybeWhen(
+                        data: (cars) => cars,
+                        orElse: () => [],
+                      ),
+                      builder: (context, cars) {
+                        return Expanded(
+                          child: RefreshIndicator(
+                            onRefresh: () async {
+                              context.read<CarsListCubit>().getAllCars();
+                            },
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              controller: _scrollController,
+                              itemCount: cars.length,
+                              itemBuilder: (context, index) {
+                                final car = cars[index];
+                                return CarItem(car: car);
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -131,7 +159,7 @@ class HomePageState extends State<HomePage> {
                 margin: EdgeInsets.only(right: 20, left: 20, bottom: Platform.isAndroid ? 15 : 0),
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: const Color(0xFF17203A).withOpacity(0.8),
+                  color: AppColors.black87.withOpacity(0.8),
                   borderRadius: const BorderRadius.all(Radius.circular(24)),
                   boxShadow: [
                     BoxShadow(

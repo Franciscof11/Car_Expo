@@ -1,5 +1,9 @@
+import 'package:car_expo/modules/cars/data/cars_repository.dart';
+import 'package:car_expo/modules/cars/presentation/home_page/cubit/cars_list_cubit.dart';
 import 'package:car_expo/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -132,7 +136,10 @@ class _AuthPageState extends State<AuthPage> {
                               context,
                               PageTransition(
                                 type: PageTransitionType.rightToLeft,
-                                child: const HomePage(),
+                                child: BlocProvider(
+                                  create: (context) => CarsListCubit(repository: context.read<CarsRepository>())..getAllCars(),
+                                  child: const HomePage(),
+                                ),
                               ),
                             );
                           }

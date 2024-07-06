@@ -2,14 +2,18 @@ import 'package:car_expo/modules/cars/presentation/car_detail_page/car_detail_pa
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../domain/car.dart';
+
 class CarItem extends StatelessWidget {
+  final Car car;
   const CarItem({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+    required this.car,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.infinity,
       height: 200,
       child: Stack(
@@ -24,7 +28,7 @@ class CarItem extends StatelessWidget {
               decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
-                  boxShadow: [const BoxShadow(color: Colors.black12, spreadRadius: 0.5, blurRadius: 15)]),
+                  boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 0.5, blurRadius: 15)]),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -35,11 +39,11 @@ class CarItem extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
                         Text(
-                          "Tesla Model X",
+                          car.nomeModelo,
                           style: GoogleFonts.montserrat(fontSize: 20, fontWeight: FontWeight.w500),
                         ),
                         Text(
-                          "2008",
+                          car.ano.toString(),
                           style: GoogleFonts.montserrat(
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
