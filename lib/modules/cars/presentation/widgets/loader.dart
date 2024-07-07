@@ -16,7 +16,7 @@ class Loader<B extends StateStreamable<S>, S> extends StatelessWidget {
             children: [
               SizedBox(height: MediaQuery.of(context).size.height * 0.20),
               const CircularProgressIndicator(
-                color: Colors.blue,
+                color: Colors.black87,
               ),
             ],
           )),

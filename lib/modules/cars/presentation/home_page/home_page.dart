@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:car_expo/modules/cars/data/cars_repository.dart';
 import 'package:car_expo/modules/cars/presentation/profile_page/profile_page.dart';
 import 'package:car_expo/utils/app_colors.dart';
 import 'package:flutter/material.dart';

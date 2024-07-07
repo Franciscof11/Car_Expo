@@ -1,6 +1,8 @@
 import 'package:car_expo/modules/cars/presentation/car_detail_page/car_detail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../domain/car.dart';
 
@@ -13,6 +15,49 @@ class CarItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    NumberFormat formatter = NumberFormat('#.000');
+    String carValor = formatter.format(car.valor);
+
+    Widget renderImageCar(int modeloId) {
+      switch (modeloId) {
+        case 12:
+          return Positioned(
+            top: -60,
+            left: 6,
+            child: Image.asset(
+              "assets/images/onix.png",
+              width: 230,
+              height: 230,
+            ),
+          );
+
+        case 14:
+          return Positioned(
+            top: -60,
+            left: 20,
+            child: Image.asset(
+              "assets/images/jetta.png",
+              width: 230,
+              height: 230,
+            ),
+          );
+
+        case 79:
+          return Positioned(
+            top: -45,
+            left: -15,
+            child: Image.asset(
+              "assets/images/sw4.png",
+              width: 260,
+              height: 200,
+            ),
+          );
+
+        default:
+          return Container();
+      }
+    }
+
     return SizedBox(
       width: double.infinity,
       height: 200,
@@ -26,9 +71,12 @@ class CarItem extends StatelessWidget {
               padding: const EdgeInsets.only(left: 20, top: 20),
               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(20),
-                  boxShadow: const [BoxShadow(color: Colors.black12, spreadRadius: 0.5, blurRadius: 15)]),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: const [
+                  BoxShadow(color: Colors.black12, spreadRadius: 0.5, blurRadius: 15),
+                ],
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
@@ -59,30 +107,39 @@ class CarItem extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      RichText(
-                        text: TextSpan(
-                          style: GoogleFonts.montserrat(fontSize: 16, color: Colors.black87, fontWeight: FontWeight.w500),
-                          children: const <TextSpan>[
-                            TextSpan(text: '\$180'),
-                            TextSpan(text: '/day', style: TextStyle(color: Colors.black38)),
-                          ],
+                      Text(
+                        'R\$$carValor',
+                        style: GoogleFonts.montserrat(
+                          fontSize: 17,
+                          color: Colors.black87,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: 130,
                         height: 50,
                         child: ElevatedButton(
                           onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => const CarDetailPage()));
+                            Navigator.push(
+                              context,
+                              PageTransition(
+                                type: PageTransitionType.rightToLeft,
+                                child: CarDetailPage(car: car),
+                              ),
+                            );
                           },
-                          child: Text(
-                            "Details",
-                            style: GoogleFonts.montserrat(fontWeight: FontWeight.w400, fontSize: 18),
-                          ),
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: const BorderRadius.only(topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                            shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
+                            ),
+                          ),
+                          child: Text(
+                            "Detalhes",
+                            style: GoogleFonts.montserrat(
+                              fontSize: 17,
+                              color: Colors.black87,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ),
@@ -93,15 +150,7 @@ class CarItem extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            top: 5,
-            left: 15,
-            child: Image.asset(
-              "assets/images/tesla_1.png",
-              width: 150,
-              height: 100,
-            ),
-          ),
+          renderImageCar(car.modeloId),
         ],
       ),
     );

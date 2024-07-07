@@ -7,7 +7,7 @@ class Car {
   int numPortas;
   String cor;
   String nomeModelo;
-  int valor;
+  double valor;
   Car({
     required this.id,
     required this.timestampCadastro,
@@ -30,7 +30,7 @@ class Car {
       numPortas: map['num_portas'] ?? 0,
       cor: map['cor'] ?? '',
       nomeModelo: map['nome_modelo'] ?? '',
-      valor: map['valor'].toInt() ?? 0,
+      valor: map['valor'] ?? 0.0,
     );
   }
 
