@@ -1,7 +1,7 @@
-import 'package:car_expo/config/database/database_service.dart';
+import 'package:car_expo/config/database/leads/database_service.dart';
 import 'package:sqflite/sqflite.dart';
 
-import '../../modules/cars/domain/lead.dart';
+import '../../../modules/cars/domain/lead.dart';
 
 class LeadsDB {
   final tableName = 'leads';

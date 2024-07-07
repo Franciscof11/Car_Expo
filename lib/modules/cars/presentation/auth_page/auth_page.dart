@@ -1,3 +1,4 @@
+import 'package:car_expo/config/database/user/user_db.dart';
 import 'package:car_expo/modules/cars/data/cars_repository.dart';
 import 'package:car_expo/modules/cars/presentation/home_page/cubit/cars_list_cubit.dart';
 import 'package:car_expo/utils/app_colors.dart';
@@ -23,6 +24,8 @@ class _AuthPageState extends State<AuthPage> {
   final nameTextController = TextEditingController();
 
   final emailTextController = TextEditingController();
+
+  final userDB = UserDB();
 
   @override
   void dispose() {
@@ -128,20 +131,24 @@ class _AuthPageState extends State<AuthPage> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                         ),
-                        onPressed: () {
+                        onPressed: () async {
                           final validForm = formKey.currentState?.validate() ?? false;
 
                           if (validForm) {
-                            Navigator.push(
-                              context,
-                              PageTransition(
-                                type: PageTransitionType.rightToLeft,
-                                child: BlocProvider(
-                                  create: (context) => CarsListCubit(repository: context.read<CarsRepository>())..getAllCars(),
-                                  child: const HomePage(),
+                            await userDB.create(name: nameTextController.text, email: emailTextController.text);
+
+                            if (context.mounted) {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.rightToLeft,
+                                  child: BlocProvider(
+                                    create: (context) => CarsListCubit(repository: context.read<CarsRepository>())..getAllCars(),
+                                    child: const HomePage(),
+                                  ),
                                 ),
-                              ),
-                            );
+                              );
+                            }
                           }
                         },
                         child: Row(

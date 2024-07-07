@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:car_expo/config/database/user/user_db.dart';
 import 'package:car_expo/modules/cars/presentation/profile_page/profile_page.dart';
 import 'package:car_expo/utils/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -7,9 +8,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
-import '../../../../config/database/leads_db.dart';
+import '../../../../config/database/leads/leads_db.dart';
 import '../../domain/car.dart';
 import '../../domain/lead.dart';
+import '../../domain/user.dart';
 import '../widgets/brand_list.dart';
 import '../widgets/cars_item.dart';
 import '../widgets/loader.dart';
@@ -27,6 +29,7 @@ class HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
 
   final leadDb = LeadsDB();
+  final userDb = UserDB();
 
   @override
   void initState() {
@@ -79,7 +82,13 @@ class HomePageState extends State<HomePage> {
                       Icons.search,
                       size: 30,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      final List<User> user = await userDb.getAll();
+
+                      for (var row in user) {
+                        print(row);
+                      }
+                    },
                   ),
                 ],
               ),

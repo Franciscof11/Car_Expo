@@ -1,4 +1,4 @@
-import 'package:car_expo/config/database/leads_db.dart';
+import 'package:car_expo/config/database/leads/leads_db.dart';
 import 'package:car_expo/modules/cars/domain/car.dart';
 import 'package:car_expo/modules/cars/domain/lead.dart';
 import 'package:car_expo/modules/cars/presentation/lead_feedback_page/lead_feedback_page.dart';
@@ -17,20 +17,7 @@ class CarDetailPage extends StatefulWidget {
 }
 
 class CarDetailPageState extends State<CarDetailPage> {
-  Future<List<Lead>>? futureLeads;
   final leadDb = LeadsDB();
-
-  void getAllLeads() {
-    setState(() {
-      futureLeads = leadDb.getAll();
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getAllLeads();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -221,11 +208,11 @@ class CarDetailPageState extends State<CarDetailPage> {
               child: ElevatedButton(
                 onPressed: () async {
                   await leadDb.create(
-                      carId: widget.car.id, carName: widget.car.nomeModelo.toLowerCase(), userName: 'Francisco Gabriel', userEmail: 'chico@teste.com');
-
-                  if (!mounted) return;
-
-                  getAllLeads();
+                    carId: widget.car.id,
+                    carName: widget.car.nomeModelo.toLowerCase(),
+                    userName: 'Francisco Gabriel',
+                    userEmail: 'chico@teste.com',
+                  );
 
                   if (context.mounted) {
                     Navigator.push(

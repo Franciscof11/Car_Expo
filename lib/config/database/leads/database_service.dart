@@ -1,4 +1,4 @@
-import 'package:car_expo/config/database/leads_db.dart';
+import 'package:car_expo/config/database/leads/leads_db.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
