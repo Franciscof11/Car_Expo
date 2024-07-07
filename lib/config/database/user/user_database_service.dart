@@ -30,6 +30,7 @@ class UserDatabaseService {
       onCreate: create,
       singleInstance: true,
     );
+
     return database;
   }
 

@@ -17,7 +17,7 @@ class UserDB {
     );
   }
 
-  Future<int> create({
+  Future<int> createUser({
     required String name,
     required String email,
   }) async {
@@ -28,11 +28,22 @@ class UserDB {
     );
   }
 
-  Future<List<User>> getAll() async {
+  Future<List<User>> getUser() async {
     final database = await UserDatabaseService().database;
     final user = await database.rawQuery(
       '''SELECT * from $tableName''',
     );
     return user.map((user) => User.fromDatabase(user)).toList();
+  }
+
+  Future<void> clearTable() async {
+    final database = await UserDatabaseService().database;
+    await database.execute('DELETE FROM $tableName');
+  }
+
+  Future<bool> hasUser() async {
+    final database = await UserDatabaseService().database;
+    final userList = await database.rawQuery('''SELECT * from $tableName''');
+    return userList.isNotEmpty;
   }
 }

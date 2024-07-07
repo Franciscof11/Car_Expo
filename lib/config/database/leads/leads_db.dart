@@ -39,4 +39,9 @@ class LeadsDB {
     );
     return leads.map((lead) => Lead.fromDatabase(lead)).toList();
   }
+
+  Future<void> clearTable() async {
+    final database = await DatabaseService().database;
+    await database.execute('DELETE FROM $tableName');
+  }
 }
