@@ -11,6 +11,7 @@ class LeadsDB {
       """CREATE TABLE IF NOT EXISTS $tableName (
   "leadId" INTEGER NOT NULL,
   "carId" INTEGER NOT NULL,
+  "carName" TEXT NOT NULL,
   "userName" TEXT NOT NULL,
   "userEmail" TEXT NOT NULL,
    PRIMARY KEY("leadId" AUTOINCREMENT)
@@ -20,13 +21,14 @@ class LeadsDB {
 
   Future<int> create({
     required int carId,
+    required String carName,
     required String userName,
     required String userEmail,
   }) async {
     final database = await DatabaseService().database;
     return await database.rawInsert(
-      '''INSERT INTO $tableName (carId,userName,userEmail) VALUES (?,?)''',
-      [carId, userName, userEmail],
+      '''INSERT INTO $tableName (carId, carName, userName, userEmail) VALUES (?,?,?,?)''',
+      [carId, carName, userName, userEmail],
     );
   }
 

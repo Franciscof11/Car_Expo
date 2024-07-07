@@ -7,7 +7,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../../../../config/database/leads_db.dart';
 import '../../domain/car.dart';
+import '../../domain/lead.dart';
 import '../widgets/brand_list.dart';
 import '../widgets/cars_item.dart';
 import '../widgets/loader.dart';
@@ -23,6 +25,8 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   bool _isVisible = true;
   final ScrollController _scrollController = ScrollController();
+
+  final leadDb = LeadsDB();
 
   @override
   void initState() {
@@ -99,7 +103,13 @@ class HomePageState extends State<HomePage> {
                           ),
                         ),
                         IconButton(
-                          onPressed: () async {},
+                          onPressed: () async {
+                            final List<Lead> data = await leadDb.getAll();
+
+                            for (var row in data) {
+                              print(row);
+                            }
+                          },
                           icon: const Icon(Icons.sort),
                         )
                       ],

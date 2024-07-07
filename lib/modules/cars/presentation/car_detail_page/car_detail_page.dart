@@ -1,4 +1,6 @@
+import 'package:car_expo/config/database/leads_db.dart';
 import 'package:car_expo/modules/cars/domain/car.dart';
+import 'package:car_expo/modules/cars/domain/lead.dart';
 import 'package:car_expo/modules/cars/presentation/lead_feedback_page/lead_feedback_page.dart';
 import 'package:car_expo/utils/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,21 @@ class CarDetailPage extends StatefulWidget {
 }
 
 class CarDetailPageState extends State<CarDetailPage> {
+  Future<List<Lead>>? futureLeads;
+  final leadDb = LeadsDB();
+
+  void getAllLeads() {
+    setState(() {
+      futureLeads = leadDb.getAll();
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getAllLeads();
+  }
+
   @override
   Widget build(BuildContext context) {
     NumberFormat formatter = NumberFormat('#.000');
@@ -202,14 +219,23 @@ class CarDetailPageState extends State<CarDetailPage> {
               width: 170,
               height: 60,
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.rightToLeft,
-                      child: const LeadFeedbackPage(),
-                    ),
-                  );
+                onPressed: () async {
+                  await leadDb.create(
+                      carId: widget.car.id, carName: widget.car.nomeModelo.toLowerCase(), userName: 'Francisco Gabriel', userEmail: 'chico@teste.com');
+
+                  if (!mounted) return;
+
+                  getAllLeads();
+
+                  if (context.mounted) {
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.rightToLeft,
+                        child: const LeadFeedbackPage(),
+                      ),
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
