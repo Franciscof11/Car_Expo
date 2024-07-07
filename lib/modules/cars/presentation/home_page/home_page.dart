@@ -83,7 +83,7 @@ class HomePageState extends State<HomePage> {
                       size: 30,
                     ),
                     onPressed: () async {
-                      final List<User> user = await userDb.getAll();
+                      final List<User> user = await userDb.getUser();
 
                       for (var row in user) {
                         print(row);
