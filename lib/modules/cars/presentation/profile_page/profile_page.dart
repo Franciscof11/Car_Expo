@@ -64,7 +64,7 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 20),
               Center(
                 child: Image.asset(
-                  'assets/profile_image.png',
+                  'assets/images/profile_image.png',
                   height: 300,
                 ),
               ),

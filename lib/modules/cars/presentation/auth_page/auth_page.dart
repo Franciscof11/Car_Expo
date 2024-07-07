@@ -62,7 +62,7 @@ class _AuthPageState extends State<AuthPage> {
                         ),
                       ),
                       Image.asset(
-                        'assets/icon_app.png',
+                        'assets/icons/icon_app.png',
                         width: 80,
                         height: 80,
                       ),
