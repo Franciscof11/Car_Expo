@@ -1,11 +1,12 @@
 import 'dart:io';
-
 import 'package:car_expo/modules/cars/data/cars_repository.dart';
+import 'package:car_expo/modules/cars/presentation/profile_page/profile_page.dart';
 import 'package:car_expo/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 
 import '../../domain/car.dart';
 import '../widgets/brand_list.dart';
@@ -21,14 +22,6 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  int _selectedPageIndex = 0;
-
-  void setSelectedIndex(int index) {
-    setState(() {
-      _selectedPageIndex = index;
-    });
-  }
-
   bool _isVisible = true;
   final ScrollController _scrollController = ScrollController();
 
@@ -174,18 +167,18 @@ class HomePageState extends State<HomePage> {
                   children: [
                     IconButton(
                       icon: const Icon(Icons.grid_view, color: Colors.white),
-                      onPressed: () {
-                        setState(() {
-                          _selectedPageIndex = 0;
-                        });
-                      },
+                      onPressed: () {},
                     ),
                     IconButton(
                       icon: const Icon(Icons.person, color: Colors.white),
                       onPressed: () {
-                        setState(() {
-                          _selectedPageIndex = 1;
-                        });
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.rightToLeft,
+                            child: const ProfilePage(),
+                          ),
+                        );
                       },
                     ),
                   ],
