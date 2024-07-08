@@ -8,13 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:sqflite/sqflite.dart';
 
 import '../home_page/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
-  final Database userDB;
-  const SplashScreen({super.key, required this.userDB});
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();

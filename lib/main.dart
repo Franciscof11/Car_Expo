@@ -3,28 +3,23 @@ import 'package:car_expo/modules/cars/presentation/splash_screen/splash_screen.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'config/database/user/user_database_service.dart';
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final userDB = await UserDatabaseService().database;
-
-  runApp(MainApp(userDB: userDB));
+  runApp(const MainApp());
 }
 
 class MainApp extends StatelessWidget {
-  final userDB;
-  const MainApp({super.key, this.userDB});
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return RepositoryProvider(
       create: (context) => CarsRepository(),
-      child: MaterialApp(
+      child: const MaterialApp(
         title: 'Car Expo',
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(userDB: userDB),
+        home: SplashScreen(),
       ),
     );
   }
