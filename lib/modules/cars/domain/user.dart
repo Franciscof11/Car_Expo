@@ -40,6 +40,14 @@ class User {
     );
   }
 
+  factory User.empy() {
+    return User(
+      userId: 0,
+      name: '',
+      email: '',
+    );
+  }
+
   String toJson() => json.encode(toMap());
 
   factory User.fromJson(String source) => User.fromMap(json.decode(source));

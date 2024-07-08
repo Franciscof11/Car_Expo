@@ -1,3 +1,4 @@
+import 'package:car_expo/config/database/user/user_db.dart';
 import 'package:car_expo/modules/cars/data/cars_repository.dart';
 import 'package:car_expo/modules/cars/presentation/home_page/cubit/cars_list_cubit.dart';
 import 'package:car_expo/modules/cars/presentation/home_page/home_page.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
+
+import '../profile_page/cubit/user_cubit.dart';
 
 class LeadFeedbackPage extends StatelessWidget {
   const LeadFeedbackPage({super.key});
@@ -73,12 +76,16 @@ class LeadFeedbackPage extends StatelessWidget {
             const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () {
+                final userDB = UserDB();
                 Navigator.push(
                   context,
                   PageTransition(
-                    type: PageTransitionType.rightToLeft,
-                    child: BlocProvider(
-                      create: (context) => CarsListCubit(repository: context.read<CarsRepository>())..getAllCars(),
+                    type: PageTransitionType.leftToRight,
+                    child: MultiBlocProvider(
+                      providers: [
+                        BlocProvider(create: (context) => CarsListCubit(repository: context.read<CarsRepository>())..getAllCars()),
+                        BlocProvider(create: (context) => UserCubit(userDB)..getUser()),
+                      ],
                       child: const HomePage(),
                     ),
                   ),

@@ -2,7 +2,6 @@ import 'package:car_expo/modules/cars/data/cars_repository.dart';
 import 'package:car_expo/modules/cars/presentation/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sqflite/sqflite.dart';
 
 import 'config/database/user/user_database_service.dart';
 

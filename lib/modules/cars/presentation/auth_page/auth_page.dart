@@ -9,6 +9,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
 
 import '../home_page/home_page.dart';
+import '../profile_page/cubit/user_cubit.dart';
 import '../widgets/custom_text_form_field.dart';
 
 class AuthPage extends StatefulWidget {
@@ -144,8 +145,11 @@ class _AuthPageState extends State<AuthPage> {
                                   context,
                                   PageTransition(
                                     type: PageTransitionType.rightToLeft,
-                                    child: BlocProvider(
-                                      create: (context) => CarsListCubit(repository: context.read<CarsRepository>())..getAllCars(),
+                                    child: MultiBlocProvider(
+                                      providers: [
+                                        BlocProvider(create: (context) => CarsListCubit(repository: context.read<CarsRepository>())..getAllCars()),
+                                        BlocProvider(create: (context) => UserCubit(userDB)..getUser()),
+                                      ],
                                       child: const HomePage(),
                                     ),
                                   ),

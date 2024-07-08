@@ -1,6 +1,6 @@
 import 'package:car_expo/config/database/leads/leads_db.dart';
+import 'package:car_expo/config/database/user/user_db.dart';
 import 'package:car_expo/modules/cars/domain/car.dart';
-import 'package:car_expo/modules/cars/domain/lead.dart';
 import 'package:car_expo/modules/cars/presentation/lead_feedback_page/lead_feedback_page.dart';
 import 'package:car_expo/utils/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class CarDetailPage extends StatefulWidget {
 
 class CarDetailPageState extends State<CarDetailPage> {
   final leadDb = LeadsDB();
-
+  final userDB = UserDB();
   @override
   Widget build(BuildContext context) {
     NumberFormat formatter = NumberFormat('#.000');
@@ -207,11 +207,12 @@ class CarDetailPageState extends State<CarDetailPage> {
               height: 60,
               child: ElevatedButton(
                 onPressed: () async {
+                  final user = await userDB.getUser();
                   await leadDb.create(
                     carId: widget.car.id,
                     carName: widget.car.nomeModelo.toLowerCase(),
-                    userName: 'Francisco Gabriel',
-                    userEmail: 'chico@teste.com',
+                    userName: user.name,
+                    userEmail: user.email,
                   );
 
                   if (context.mounted) {

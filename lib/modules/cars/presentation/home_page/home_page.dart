@@ -12,6 +12,7 @@ import '../../../../config/database/leads/leads_db.dart';
 import '../../domain/car.dart';
 import '../../domain/lead.dart';
 import '../../domain/user.dart';
+import '../profile_page/cubit/user_cubit.dart';
 import '../widgets/brand_list.dart';
 import '../widgets/cars_item.dart';
 import '../widgets/loader.dart';
@@ -65,17 +66,25 @@ class HomePageState extends State<HomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  RichText(
-                    text: TextSpan(
-                      style: GoogleFonts.montserrat(
-                        fontSize: 26,
-                        color: Colors.black87,
-                      ),
-                      children: const <TextSpan>[
-                        TextSpan(text: 'Olá,', style: TextStyle(fontWeight: FontWeight.bold)),
-                        TextSpan(text: ' Francisco!'),
-                      ],
+                  BlocSelector<UserCubit, UserState, User>(
+                    selector: (state) => state.maybeWhen(
+                      data: (user) => user,
+                      orElse: () => User.empy(),
                     ),
+                    builder: (context, user) {
+                      return RichText(
+                        text: TextSpan(
+                          style: GoogleFonts.montserrat(
+                            fontSize: 26,
+                            color: Colors.black87,
+                          ),
+                          children: <TextSpan>[
+                            const TextSpan(text: 'Olá,', style: TextStyle(fontWeight: FontWeight.bold)),
+                            TextSpan(text: ' ${user.name.split(' ').first}!'),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                   IconButton(
                     icon: const Icon(
@@ -83,11 +92,9 @@ class HomePageState extends State<HomePage> {
                       size: 30,
                     ),
                     onPressed: () async {
-                      final List<User> user = await userDb.getUser();
+                      final user = await userDb.getUser();
 
-                      for (var row in user) {
-                        print(row);
-                      }
+                      print(user);
                     },
                   ),
                 ],
@@ -139,6 +146,7 @@ class HomePageState extends State<HomePage> {
                       builder: (context, cars) {
                         return Expanded(
                           child: RefreshIndicator(
+                            color: Colors.blue,
                             onRefresh: () async {
                               context.read<CarsListCubit>().getAllCars();
                             },
@@ -189,14 +197,19 @@ class HomePageState extends State<HomePage> {
                     ),
                     IconButton(
                       icon: const Icon(Icons.person, color: Colors.white),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                            type: PageTransitionType.rightToLeft,
-                            child: const ProfilePage(),
-                          ),
-                        );
+                      onPressed: () async {
+                        if (context.mounted) {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                              type: PageTransitionType.rightToLeft,
+                              child: BlocProvider(
+                                create: (context) => UserCubit(userDb)..getUser(),
+                                child: const ProfilePage(),
+                              ),
+                            ),
+                          );
+                        }
                       },
                     ),
                   ],

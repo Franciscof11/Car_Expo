@@ -28,12 +28,12 @@ class UserDB {
     );
   }
 
-  Future<List<User>> getUser() async {
+  Future<User> getUser() async {
     final database = await UserDatabaseService().database;
     final user = await database.rawQuery(
       '''SELECT * from $tableName''',
     );
-    return user.map((user) => User.fromDatabase(user)).toList();
+    return user.map((user) => User.fromDatabase(user)).toList().first;
   }
 
   Future<void> clearTable() async {

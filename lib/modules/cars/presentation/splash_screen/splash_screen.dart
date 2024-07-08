@@ -3,6 +3,7 @@ import 'package:car_expo/config/database/user/user_db.dart';
 import 'package:car_expo/modules/cars/data/cars_repository.dart';
 import 'package:car_expo/modules/cars/presentation/auth_page/auth_page.dart';
 import 'package:car_expo/modules/cars/presentation/home_page/cubit/cars_list_cubit.dart';
+import 'package:car_expo/modules/cars/presentation/profile_page/cubit/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
@@ -47,8 +48,11 @@ class _SplashScreenState extends State<SplashScreen> {
                   context,
                   PageTransition(
                     type: PageTransitionType.rightToLeft,
-                    child: BlocProvider(
-                      create: (context) => CarsListCubit(repository: context.read<CarsRepository>())..getAllCars(),
+                    child: MultiBlocProvider(
+                      providers: [
+                        BlocProvider(create: (context) => CarsListCubit(repository: context.read<CarsRepository>())..getAllCars()),
+                        BlocProvider(create: (context) => UserCubit(userDB)..getUser()),
+                      ],
                       child: const HomePage(),
                     ),
                   ),
@@ -61,9 +65,9 @@ class _SplashScreenState extends State<SplashScreen> {
               }
             });
 
-            return Container();
+            return const SizedBox.shrink();
           } else {
-            return const Center(child: Text('No data found.'));
+            return const SizedBox.shrink();
           }
         },
       ),
