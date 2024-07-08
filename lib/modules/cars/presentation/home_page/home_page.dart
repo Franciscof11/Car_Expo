@@ -16,6 +16,7 @@ import '../../domain/user.dart';
 import '../profile_page/cubit/user_cubit.dart';
 import '../widgets/brand_list.dart';
 import '../widgets/cars_item.dart';
+import '../widgets/custom_text_form_field.dart';
 import '../widgets/loader.dart';
 import 'cubit/cars_list_cubit.dart';
 
@@ -53,6 +54,14 @@ class HomePageState extends State<HomePage> {
         });
       }
     }
+  }
+
+  bool _showSearchField = false;
+
+  void _toggleTextField() {
+    setState(() {
+      _showSearchField = !_showSearchField;
+    });
   }
 
   @override
@@ -94,16 +103,19 @@ class HomePageState extends State<HomePage> {
                         Icons.search,
                         size: 30,
                       ),
-                      onPressed: () async {
-                        final user = await userDb.getUser();
-
-                        debugPrint('### USER ###');
-                        debugPrint(user.toString());
-                      },
+                      onPressed: () => _toggleTextField(),
                     ),
                   ],
                 ),
               ),
+              if (_showSearchField)
+                const Padding(
+                  padding: EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 30),
+                  child: CustomTextFormField(
+                    label: 'Pesquisar carro',
+                    isSearch: true,
+                  ),
+                ),
               const BrandList(),
               Expanded(
                 child: Container(
@@ -123,17 +135,7 @@ class HomePageState extends State<HomePage> {
                             ),
                           ),
                           IconButton(
-                            onPressed: () async {
-                              final List<Lead> leads = await leadDb.getAll();
-
-                              for (var lead in leads) {
-                                debugPrint('#LEAD -> $lead');
-                              }
-
-                              final leadsRepository = LeadsRepository();
-
-                              leadsRepository.postLeads(leads);
-                            },
+                            onPressed: () async {},
                             icon: const Icon(Icons.sort),
                           )
                         ],

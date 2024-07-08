@@ -30,4 +30,20 @@ class CarsListCubit extends Cubit<CarsListState> {
       emit(const CarsListState.error(message: 'Erro ao buscar carros disponíveis!'));
     }
   }
+
+  Future<void> searchCar(String carName) async {
+    try {
+      final cars = await _repository.getAllCars();
+
+      final filteredCars = cars.where((car) => car.nomeModelo.toLowerCase().contains(carName.toLowerCase())).toList();
+
+      emit(CarsListState.data(cars: filteredCars));
+    } catch (e) {
+      log(
+        'Erro ao buscar carros disponíveis!',
+        error: e,
+      );
+      emit(const CarsListState.error(message: 'Erro ao buscar carros disponíveis!'));
+    }
+  }
 }

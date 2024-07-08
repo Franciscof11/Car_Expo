@@ -1,4 +1,6 @@
+import 'package:car_expo/modules/cars/presentation/home_page/cubit/cars_list_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextFormField extends StatefulWidget {
@@ -6,12 +8,14 @@ class CustomTextFormField extends StatefulWidget {
   final Widget? sufixIcon;
   final bool? isEmail;
   final TextEditingController? controller;
+  final bool isSearch;
   const CustomTextFormField({
     super.key,
     required this.label,
     this.sufixIcon,
     this.controller,
     this.isEmail = false,
+    this.isSearch = false,
   });
 
   @override
@@ -39,6 +43,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           }
         }
         return null;
+      },
+      onChanged: (value) {
+        if (widget.isSearch) context.read<CarsListCubit>().searchCar(value);
       },
       cursorColor: Colors.grey,
       decoration: InputDecoration(

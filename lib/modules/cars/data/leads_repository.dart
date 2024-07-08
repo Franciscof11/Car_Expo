@@ -23,7 +23,7 @@ class LeadsRepository {
       );
 
       if (response.statusCode == 200) {
-        print('Leads posted successfully!');
+        debugPrint('Leads posted successfully!');
       }
     } catch (e) {
       debugPrint('Unexpected Error: $e');
