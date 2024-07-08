@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:car_expo/config/database/leads/leads_db.dart';
 import 'package:car_expo/config/database/user/user_db.dart';
 import 'package:car_expo/modules/cars/data/cars_repository.dart';
+import 'package:car_expo/modules/cars/data/leads_repository.dart';
 import 'package:car_expo/modules/cars/presentation/auth_page/auth_page.dart';
 import 'package:car_expo/modules/cars/presentation/home_page/cubit/cars_list_cubit.dart';
 import 'package:car_expo/modules/cars/presentation/profile_page/cubit/user_cubit.dart';
@@ -9,6 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lottie/lottie.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../../domain/lead.dart';
 import '../home_page/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -19,6 +24,34 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  deploymentRoutine() {
+    final leadDb = LeadsDB();
+
+    final leadsRepository = LeadsRepository();
+
+    Timer.periodic(
+      const Duration(minutes: 5),
+      (timer) async {
+        final List<Lead> leads = await leadDb.getAll();
+
+        await leadsRepository.postLeads(leads);
+
+        debugPrint('#Sucess deploy routine!');
+        debugPrint(leads.toString());
+        debugPrint('');
+        debugPrint('#Cleaning leads table...');
+
+        await leadDb.clearTable();
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    deploymentRoutine();
+  }
+
   @override
   Widget build(BuildContext context) {
     final userDB = UserDB();
