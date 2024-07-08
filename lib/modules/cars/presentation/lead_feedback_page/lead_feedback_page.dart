@@ -15,102 +15,107 @@ class LeadFeedbackPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            const SizedBox(height: 120),
-            Stack(
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 275),
-                  child: Material(
-                    elevation: 10,
-                    borderRadius: BorderRadius.circular(15),
-                    child: Container(
-                      height: 200,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 30,
-                          right: 20,
-                          left: 20,
-                        ),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 12),
-                            const Icon(
-                              Icons.check_circle_outline,
-                              color: Colors.blue,
-                              size: 44,
+                const SizedBox(height: 120),
+                Stack(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 275),
+                      child: Material(
+                        elevation: 10,
+                        borderRadius: BorderRadius.circular(15),
+                        child: Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              top: 30,
+                              right: 20,
+                              left: 20,
                             ),
-                            const SizedBox(height: 10),
-                            Expanded(
-                              child: Text(
-                                'Solicitação de compra enviada com sucesso!',
-                                style: GoogleFonts.montserrat(
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 12),
+                                const Icon(
+                                  Icons.check_circle_outline,
                                   color: Colors.blue,
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w700,
+                                  size: 44,
                                 ),
-                                textAlign: TextAlign.center,
-                              ),
+                                const SizedBox(height: 10),
+                                Expanded(
+                                  child: Text(
+                                    'Solicitação de compra enviada com sucesso!',
+                                    style: GoogleFonts.montserrat(
+                                      color: Colors.blue,
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),
+                    Image.asset(
+                      'assets/images/lead_feedback.png',
+                      width: MediaQuery.of(context).size.width,
+                      height: 300,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 40),
+                ElevatedButton(
+                  onPressed: () {
+                    final userDB = UserDB();
+                    Navigator.push(
+                      context,
+                      PageTransition(
+                        type: PageTransitionType.leftToRight,
+                        child: MultiBlocProvider(
+                          providers: [
+                            BlocProvider(create: (context) => CarsListCubit(repository: context.read<CarsRepository>())..getAllCars()),
+                            BlocProvider(create: (context) => UserCubit(userDB)..getUser()),
+                          ],
+                          child: const HomePage(),
+                        ),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.black87,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 40,
+                      vertical: 20,
+                    ),
+                  ),
+                  child: Text(
+                    'Ir para Home',
+                    style: GoogleFonts.montserrat(
+                      color: AppColors.whiteIce,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
-                Image.asset(
-                  'assets/images/lead_feedback.png',
-                  width: MediaQuery.of(context).size.width,
-                  height: 300,
-                ),
+                const SizedBox(height: 50),
               ],
             ),
-            const SizedBox(height: 40),
-            ElevatedButton(
-              onPressed: () {
-                final userDB = UserDB();
-                Navigator.push(
-                  context,
-                  PageTransition(
-                    type: PageTransitionType.leftToRight,
-                    child: MultiBlocProvider(
-                      providers: [
-                        BlocProvider(create: (context) => CarsListCubit(repository: context.read<CarsRepository>())..getAllCars()),
-                        BlocProvider(create: (context) => UserCubit(userDB)..getUser()),
-                      ],
-                      child: const HomePage(),
-                    ),
-                  ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.black87,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 20,
-                ),
-              ),
-              child: Text(
-                'Ir para Home',
-                style: GoogleFonts.montserrat(
-                  color: AppColors.whiteIce,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            const SizedBox(height: 50),
-          ],
+          ),
         ),
       ),
     );

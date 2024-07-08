@@ -191,6 +191,7 @@ class _AuthPageState extends State<AuthPage> {
                         ),
                       ),
                     ),
+                    const SizedBox(height: 40),
                   ],
                 ),
               ),

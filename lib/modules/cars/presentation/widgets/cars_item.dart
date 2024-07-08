@@ -1,4 +1,5 @@
 import 'package:car_expo/modules/cars/presentation/car_detail_page/car_detail_page.dart';
+import 'package:car_expo/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -18,43 +19,19 @@ class CarItem extends StatelessWidget {
     NumberFormat formatter = NumberFormat('#.000');
     String carValor = formatter.format(car.valor);
 
-    Widget renderImageCar(int modeloId) {
+    String renderImageCar(int modeloId) {
       switch (modeloId) {
         case 12:
-          return Positioned(
-            top: -60,
-            left: 6,
-            child: Image.asset(
-              "assets/images/onix.png",
-              width: 230,
-              height: 230,
-            ),
-          );
+          return 'onix.png';
 
         case 14:
-          return Positioned(
-            top: -60,
-            left: 20,
-            child: Image.asset(
-              "assets/images/jetta.png",
-              width: 230,
-              height: 230,
-            ),
-          );
+          return 'jetta.png';
 
         case 79:
-          return Positioned(
-            top: -45,
-            left: -15,
-            child: Image.asset(
-              "assets/images/sw4.png",
-              width: 260,
-              height: 200,
-            ),
-          );
+          return 'sw4.png';
 
         default:
-          return Container();
+          return '';
       }
     }
 
@@ -130,6 +107,7 @@ class CarItem extends StatelessWidget {
                           },
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
+                            backgroundColor: AppColors.black87,
                             shape: const RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(topLeft: Radius.circular(20), bottomRight: Radius.circular(20)),
                             ),
@@ -138,7 +116,7 @@ class CarItem extends StatelessWidget {
                             "Detalhes",
                             style: GoogleFonts.montserrat(
                               fontSize: 17,
-                              color: Colors.black87,
+                              color: AppColors.whiteIce,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
@@ -150,7 +128,14 @@ class CarItem extends StatelessWidget {
               ),
             ),
           ),
-          renderImageCar(car.modeloId),
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Image.asset(
+              "assets/images/${renderImageCar(car.modeloId)}",
+              width: 180,
+              height: 180,
+            ),
+          ),
         ],
       ),
     );

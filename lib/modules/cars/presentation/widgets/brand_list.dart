@@ -66,7 +66,7 @@ class BrandListState extends State<BrandList> {
                 return GestureDetector(
                   onTap: () {
                     setBrandIndex(index);
-                    print(brandList[index]["name"]!);
+                    debugPrint(brandList[index]["name"]!);
                   },
                   child: BrandItem(
                     imgAsset: brandList[index]["icon"]!,

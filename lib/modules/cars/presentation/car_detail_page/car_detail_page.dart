@@ -29,22 +29,21 @@ class CarDetailPageState extends State<CarDetailPage> {
         case 12:
           return Image.asset(
             "assets/images/onix.png",
-            width: 500,
-            height: 500,
+            height: 200,
+            fit: BoxFit.cover,
           );
 
         case 14:
           return Image.asset(
             "assets/images/jetta.png",
-            width: 230,
-            height: 230,
+            height: 200,
+            fit: BoxFit.cover,
           );
 
         case 79:
           return Image.asset(
             "assets/images/sw4.png",
-            width: 400,
-            height: 400,
+            height: 200,
             fit: BoxFit.cover,
           );
 
@@ -53,24 +52,9 @@ class CarDetailPageState extends State<CarDetailPage> {
       }
     }
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: Colors.black87,
-          title: Padding(
-            padding: const EdgeInsets.only(top: 20, left: 10),
-            child: GestureDetector(
-              onTap: () => Navigator.pop(context),
-              child: const Icon(
-                Icons.arrow_back_ios,
-                size: 40,
-                color: AppColors.whiteIce,
-              ),
-            ),
-          ),
-        ),
-        body: Column(
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
@@ -83,7 +67,23 @@ class CarDetailPageState extends State<CarDetailPage> {
                   bottomLeft: Radius.circular(50),
                 ),
               ),
-              child: renderImageCar(widget.car.modeloId),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 50, left: 24),
+                    child: GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: const Icon(
+                        Icons.arrow_back_ios,
+                        size: 40,
+                        color: AppColors.whiteIce,
+                      ),
+                    ),
+                  ),
+                  renderImageCar(widget.car.modeloId)
+                ],
+              ),
             ),
             const SizedBox(height: 25),
             Padding(
@@ -188,64 +188,64 @@ class CarDetailPageState extends State<CarDetailPage> {
             ),
           ],
         ),
-        bottomSheet: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              margin: const EdgeInsets.only(left: 30),
+      ),
+      bottomSheet: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(left: 30),
+            child: Text(
+              'R\$$carValor',
+              style: GoogleFonts.montserrat(
+                fontSize: 20,
+                color: Colors.black87,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+          SizedBox(
+            width: 170,
+            height: 60,
+            child: ElevatedButton(
+              onPressed: () async {
+                final user = await userDB.getUser();
+                await leadDb.create(
+                  carId: widget.car.id,
+                  carName: widget.car.nomeModelo.toLowerCase(),
+                  userName: user.name,
+                  userEmail: user.email,
+                );
+
+                if (context.mounted) {
+                  Navigator.push(
+                    context,
+                    PageTransition(
+                      type: PageTransitionType.rightToLeft,
+                      child: const LeadFeedbackPage(),
+                    ),
+                  );
+                }
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                elevation: 0,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                  ),
+                ),
+              ),
               child: Text(
-                'R\$$carValor',
+                "EU QUERO",
                 style: GoogleFonts.montserrat(
-                  fontSize: 20,
-                  color: Colors.black87,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                  color: Colors.white,
                 ),
               ),
             ),
-            SizedBox(
-              width: 170,
-              height: 60,
-              child: ElevatedButton(
-                onPressed: () async {
-                  final user = await userDB.getUser();
-                  await leadDb.create(
-                    carId: widget.car.id,
-                    carName: widget.car.nomeModelo.toLowerCase(),
-                    userName: user.name,
-                    userEmail: user.email,
-                  );
-
-                  if (context.mounted) {
-                    Navigator.push(
-                      context,
-                      PageTransition(
-                        type: PageTransitionType.rightToLeft,
-                        child: const LeadFeedbackPage(),
-                      ),
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  elevation: 0,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(25),
-                    ),
-                  ),
-                ),
-                child: Text(
-                  "EU QUERO",
-                  style: GoogleFonts.montserrat(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
