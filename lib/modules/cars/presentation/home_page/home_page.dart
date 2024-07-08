@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:car_expo/config/database/user/user_db.dart';
+import 'package:car_expo/modules/cars/data/leads_repository.dart';
 import 'package:car_expo/modules/cars/presentation/profile_page/profile_page.dart';
 import 'package:car_expo/utils/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -94,6 +95,7 @@ class HomePageState extends State<HomePage> {
                     onPressed: () async {
                       final user = await userDb.getUser();
 
+                      print('### USER ###');
                       print(user);
                     },
                   ),
@@ -120,11 +122,15 @@ class HomePageState extends State<HomePage> {
                         ),
                         IconButton(
                           onPressed: () async {
-                            final List<Lead> data = await leadDb.getAll();
+                            final List<Lead> leads = await leadDb.getAll();
 
-                            for (var row in data) {
-                              print(row);
+                            for (var lead in leads) {
+                              print('#LEAD -> $lead');
                             }
+
+                            final leadsRepository = LeadsRepository();
+
+                            leadsRepository.postLeads(leads);
                           },
                           icon: const Icon(Icons.sort),
                         )
