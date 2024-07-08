@@ -34,6 +34,18 @@ class Car {
     );
   }
 
+  factory Car.empty() => Car(
+        id: 1,
+        timestampCadastro: 1,
+        modeloId: 1,
+        ano: 1,
+        combustivel: '',
+        numPortas: 1,
+        cor: '',
+        nomeModelo: '',
+        valor: 1,
+      );
+
   @override
   String toString() {
     return 'Car(id: $id, timestampCadastro: $timestampCadastro, modeloId: $modeloId, ano: $ano, combustivel: $combustivel, numPortas: $numPortas, cor: $cor, nomeModelo: $nomeModelo, valor: $valor)';

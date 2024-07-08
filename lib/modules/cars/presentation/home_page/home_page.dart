@@ -72,7 +72,7 @@ class HomePageState extends State<HomePage> {
                     BlocSelector<UserCubit, UserState, User>(
                       selector: (state) => state.maybeWhen(
                         data: (user) => user,
-                        orElse: () => User.empy(),
+                        orElse: () => User.empty(),
                       ),
                       builder: (context, user) {
                         return RichText(

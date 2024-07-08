@@ -69,20 +69,11 @@ class Lead {
     return 'Lead(leadId: $leadId, carId: $carId, carName: $carName, userName: $userName, userEmail: $userEmail)';
   }
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Lead &&
-        other.leadId == leadId &&
-        other.carId == carId &&
-        other.carName == carName &&
-        other.userName == userName &&
-        other.userEmail == userEmail;
-  }
-
-  @override
-  int get hashCode {
-    return leadId.hashCode ^ carId.hashCode ^ carName.hashCode ^ userName.hashCode ^ userEmail.hashCode;
-  }
+  factory Lead.empty() => Lead(
+        leadId: 1,
+        carId: 1,
+        carName: '',
+        userName: '',
+        userEmail: '',
+      );
 }

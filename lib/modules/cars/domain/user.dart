@@ -40,7 +40,7 @@ class User {
     );
   }
 
-  factory User.empy() {
+  factory User.empty() {
     return User(
       userId: 0,
       name: '',
