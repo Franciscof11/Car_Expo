@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
     final leadsRepository = LeadsRepository();
 
     Timer.periodic(
-      const Duration(minutes: 5),
+      const Duration(minutes: 10),
       (timer) async {
         final List<Lead> leads = await leadDb.getAll();
 
