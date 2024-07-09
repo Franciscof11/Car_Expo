@@ -26,7 +26,6 @@
    <p a>
    <img src="app_preview/preview_1.png.jpeg" width="300" height="600" alt="App Preview"> 
    <img src="app_preview/preview_2.png.jpeg" width="300" height="600" alt="App Preview"> 
-   <img src="app_preview/preview_3.png.jpeg" width="300" height="600" alt="App Preview"> 
    </p>
 
 ---
