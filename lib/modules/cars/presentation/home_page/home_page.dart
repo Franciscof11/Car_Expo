@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:car_expo/config/database/user/user_db.dart';
-import 'package:car_expo/modules/cars/data/leads_repository.dart';
 import 'package:car_expo/modules/cars/presentation/profile_page/profile_page.dart';
 import 'package:car_expo/utils/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +7,8 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
-
 import '../../../../config/database/leads/leads_db.dart';
 import '../../domain/car.dart';
-import '../../domain/lead.dart';
 import '../../domain/user.dart';
 import '../profile_page/cubit/user_cubit.dart';
 import '../widgets/brand_list.dart';

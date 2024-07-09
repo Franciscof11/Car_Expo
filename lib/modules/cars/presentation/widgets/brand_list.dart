@@ -1,5 +1,7 @@
+import 'package:car_expo/modules/cars/presentation/home_page/cubit/cars_list_cubit.dart';
 import 'package:car_expo/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BrandList extends StatefulWidget {
@@ -18,18 +20,22 @@ class BrandListState extends State<BrandList> {
     {
       "name": "all",
       "icon": "",
+      "id": 0,
     },
     {
       "name": "chevrolet",
       "icon": "assets/icons/chevrolet_icon.png",
+      "id": 1,
     },
     {
       "name": "volks",
       "icon": "assets/icons/volks_icon.png",
+      "id": 2,
     },
     {
       "name": "toyota",
       "icon": "assets/icons/toyota_icon.png",
+      "id": 3,
     },
   ];
 
@@ -66,10 +72,12 @@ class BrandListState extends State<BrandList> {
                 return GestureDetector(
                   onTap: () {
                     setBrandIndex(index);
-                    debugPrint(brandList[index]["name"]!);
+                    debugPrint(brandList[index]["name"].toString());
+
+                    context.read<CarsListCubit>().filterByBrand('0');
                   },
                   child: BrandItem(
-                    imgAsset: brandList[index]["icon"]!,
+                    imgAsset: brandList[index]["icon"].toString(),
                     index: 0,
                     isSelected: (_brandCategoryIndex == index) ? true : false,
                   ),
@@ -78,10 +86,15 @@ class BrandListState extends State<BrandList> {
                 return GestureDetector(
                   onTap: () {
                     setBrandIndex(index);
-                    print(brandList[index]["name"]!);
+                    debugPrint(brandList[index]["name"].toString());
+
+                    final id = brandList[index]["id"].toString();
+                    print(id);
+
+                    context.read<CarsListCubit>().filterByBrand(id);
                   },
                   child: BrandItem(
-                    imgAsset: brandList[index]["icon"]!,
+                    imgAsset: brandList[index]["icon"].toString(),
                     index: index,
                     isSelected: (_brandCategoryIndex == index) ? true : false,
                   ),

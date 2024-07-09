@@ -46,4 +46,41 @@ class CarsListCubit extends Cubit<CarsListState> {
       emit(const CarsListState.error(message: 'Erro ao buscar carros disponíveis!'));
     }
   }
+
+  Future<void> filterByBrand(String brandIdd) async {
+    try {
+      emit(const CarsListState.loading());
+
+      final cars = await _repository.getAllCars();
+
+      String brandId = brandIdd;
+
+      List<Car> filteredCars = cars;
+
+      switch (brandId) {
+        case "0":
+          print('aha');
+
+        case "1":
+          filteredCars = cars.where((car) {
+            if (car.id.toString() == "1") return true;
+            return false;
+          }).toList();
+
+        case "2":
+          filteredCars = cars.where((car) {
+            if (car.id.toString() == "2") return true;
+            return false;
+          }).toList();
+
+        case "3":
+          filteredCars = cars.where((car) {
+            if (car.id.toString() == "3") return true;
+            return false;
+          }).toList();
+      }
+
+      emit(CarsListState.data(cars: filteredCars));
+    } catch (e) {}
+  }
 }
