@@ -16,7 +16,7 @@
    <h2>About 📖</h2>
    
    <p>
-     Projeto criado para realização do teste de desenvolvimento para a empresa WS Work. O projeto consiste em um sistema de exposição de carros para venda. Nele você pode acessar a lista de carros disponíveis para venda, e fazer uma solicitação de interesse á compra, que será armazenada e enviada diretamente para os servidores de venda! No arquivo "Doc.md" na pasta raiz do projeto, está toda a documentação de desenvolvimento e arquitetura do aplicativo.
+    O projeto consiste em um sistema de exposição de carros para venda. Nele você pode acessar a lista de carros disponíveis para venda, e fazer uma solicitação de interesse á compra, que será armazenada e enviada diretamente para os servidores de venda! No arquivo "Doc.md" na pasta raiz do projeto, está toda a documentação de desenvolvimento e arquitetura do aplicativo.
    </p>
 
 ---
